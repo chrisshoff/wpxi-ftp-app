@@ -29,7 +29,8 @@ exports.index = function(req, res){
 
     files.forEach(function(file) {
       fs.readdir(playlist_dir + "/" + file, function(err, playlist_files) {
-        playlist_files.forEach(function(playlist_file) {
+	if (playlist_files != undefined) {        
+	playlist_files.forEach(function(playlist_file) {
           if (playlist_file == "status.txt") {
             checkStatus(playlist_dir + "/" + file + "/" + playlist_file, function(err, status) {
               var obj = {
@@ -55,6 +56,12 @@ exports.index = function(req, res){
             })
           }
         });
+	} else {
+	    playlists_processed++;
+            if (playlists_processed == total_playlists) {
+                renderIndex(finished_files, inprogress_files, ftpd_files, res);
+            }
+	}
       });
     })
   })
