@@ -1,11 +1,57 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Available StatEasy Playlists</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1>Ready to FTP Playlists</h1>
+    <ul>
+      <% for(var i=0; i<finished.length; i++) {%>
+
+        <% if (finished[i].status == "COMPLETE") { %>
+
+        <li><%= finished[i].shortname %>&nbsp;&nbsp;&nbsp;<span id="<%= finished[i].shortname %>_actions"><a id="<%= finished[i].shortname %>" class="ftp" href="#">FTP to Brightcove</a>&nbsp;&nbsp;&nbsp;<a id="<%= finished[i].shortname %>" class="delete" href="#">Delete Local Copy</a></span>
+        <input type="hidden" id="<%= finished[i].shortname %>_fullpath" value="<%= finished[i].fullpath %>" />
+        <input type="hidden" id="<%= finished[i].shortname %>_path" value="<%= finished[i].path %>" />
+        <input type="hidden" id="<%= finished[i].shortname %>_status" value="<%= finished[i].statusFile %>" />
+        <input type="hidden" id="<%= finished[i].shortname %>_xml" value="<%= finished[i].xmlFile %>" />
+        </li>
+
+        <% } else { %>
+
+        <li><%= finished[i].shortname %>&nbsp;&nbsp;&nbsp;<span id="<%= finished[i].shortname %>_actions"><span class="progress">Uploading</span></span>
+        <input type="hidden" id="<%= finished[i].shortname %>_fullpath" value="<%= finished[i].fullpath %>" />
+        <input type="hidden" id="<%= finished[i].shortname %>_path" value="<%= finished[i].path %>" />
+        <input type="hidden" id="<%= finished[i].shortname %>_status" value="<%= finished[i].statusFile %>" />
+        <input type="hidden" id="<%= finished[i].shortname %>_xml" value="<%= finished[i].xmlFile %>" />
+        </li>
+
+        <% } %>
+
+      <% } %>
+    </ul>
+
+    <h1>Completed FTP Transfers</h1>
+    <ul>
+      <% for(var i=0; i<ftpd.length; i++) {%>
+        <li><%= ftpd[i].shortname %>&nbsp;&nbsp;&nbsp;<a id="<%= ftpd[i].shortname %>" class="delete" href="#">Delete Local Copy</a>
+        <input type="hidden" id="<%= ftpd[i].shortname %>_fullpath" value="<%= ftpd[i].fullpath %>" />
+        <input type="hidden" id="<%= ftpd[i].shortname %>_path" value="<%= ftpd[i].path %>" />
+        <input type="hidden" id="<%= ftpd[i].shortname %>_status" value="<%= ftpd[i].statusFile %>" />
+        <input type="hidden" id="<%= ftpd[i].shortname %>_xml" value="<%= ftpd[i].xmlFile %>" />
+        </li>
+      <% } %>
+    </ul>
+
+    <h1>Currently Encoding Playlists</h1>
+    <ul>
+      <% for(var i=0; i<inprogress.length; i++) {%>
+        <li><%= inprogress[i].shortname %></li>
+      <% } %>
+    </ul>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="/js/client.js"></script>
   </body>
 </html>
